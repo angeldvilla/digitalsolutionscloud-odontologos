@@ -1,0 +1,1208 @@
+<!doctype html>
+<html class="scroll-smooth" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Etheris Dental | Sanctuary of Smiles</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v6.5.0/css/all.css"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              surface: "#f6fafe",
+              "surface-container-low": "#f0f4f8",
+              "surface-container-lowest": "#ffffff",
+              primary: "#006591",
+              "primary-container": "#0ea5e9",
+              secondary: "#006c49",
+              "on-surface": "#171c1f",
+              "on-surface-variant": "#3e4850",
+              "outline-variant": "#bec8d2",
+            },
+            fontFamily: {
+              headline: ["Manrope", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            transitionTimingFunction: {
+              premium: "cubic-bezier(0.23, 1, 0.32, 1)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Animaciones de Revelado */
+      .reveal-container .reveal-item {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .reveal-container.active .reveal-item {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Generación de retrasos para el efecto cascada */
+      .reveal-item:nth-child(1) {
+        transition-delay: 100ms;
+      }
+      .reveal-item:nth-child(2) {
+        transition-delay: 200ms;
+      }
+      .reveal-item:nth-child(3) {
+        transition-delay: 300ms;
+      }
+      .reveal-item:nth-child(4) {
+        transition-delay: 400ms;
+      }
+
+      /* Interacciones 3D */
+      .perspective-3d {
+        perspective: 1200px;
+      }
+      .inner-3d,
+      .inner-card,
+      .testimonial-card {
+        transform-style: preserve-3d;
+        transition:
+          transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .perspective-card .inner-card:hover,
+      .testimonial-card:hover,
+      .contact-panel:hover,
+      .map-panel:hover {
+        transform: translateY(-10px) rotateX(1.2deg) rotateY(-1.2deg);
+        box-shadow: 0 32px 80px rgba(0, 101, 145, 0.14);
+      }
+      .testimonial-card {
+        will-change: transform;
+      }
+
+      /* Reveal Sections */
+      .reveal,
+      .reveal-container {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+          transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .reveal.active,
+      .reveal-container.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-item {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.85s ease,
+          transform 0.85s ease;
+      }
+      .reveal.active .reveal-item,
+      .reveal-container.active .reveal-item {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Estilo Glassmorphic para Nav */
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      /* Barra de progreso de scroll */
+      #scroll-progress-root {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        z-index: 60;
+        background: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+      }
+      #scroll-progress {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(90deg, #006591, #0ea5e9);
+        transform-origin: left;
+        transition: width 0.15s ease-out;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, #006591, #0ea5e9);
+        color: #ffffff;
+        box-shadow: 0 18px 40px rgba(0, 101, 145, 0.16);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      }
+      .cta-button:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.05);
+        box-shadow: 0 24px 54px rgba(0, 101, 145, 0.2);
+      }
+      .cta-button:active {
+        transform: translateY(0px);
+      }
+
+      .service-icon {
+        background: linear-gradient(135deg, #006591, #0ea5e9);
+        color: #ffffff;
+        box-shadow: 0 18px 40px rgba(0, 101, 145, 0.15);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      }
+      .service-icon span {
+        font-size: 1.6rem;
+        color: #ffffff;
+      }
+      .perspective-card .inner-card {
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .perspective-card .inner-card:hover {
+        background: rgba(14, 165, 233, 0.08);
+        transform: translateY(-2px);
+      }
+      .perspective-card .inner-card:hover .service-icon {
+        transform: translateY(-4px) scale(1.08);
+        background: linear-gradient(135deg, #0ea5e9, #28a1f5);
+        box-shadow: 0 28px 72px rgba(14, 165, 233, 0.25);
+      }
+
+      .testimonial-slider {
+        display: flex;
+        gap: 1.25rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      .testimonial-slide {
+        min-width: 300px;
+        max-width: 600px;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+      }
+      .testimonial-card {
+        transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .testimonial-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 32px 70px rgba(0, 101, 145, 0.12);
+      }
+      .testimonial-nav {
+        position: absolute;
+        top: 46%;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .testimonial-btn {
+        pointer-events: auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.95);
+        color: #006591;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+      .testimonial-btn:hover {
+        transform: scale(1.05);
+        background: #ffffff;
+      }
+      .testimonial-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .hide-scrollbar {
+        scrollbar-width: none;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Imagen Reveal */
+      .img-parallax {
+        transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      /* Contacto interactivo */
+      .field-status {
+        font-size: 0.8rem;
+        color: #006c49;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .field-focus:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.16);
+      }
+      .contact-panel {
+        transition:
+          transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.4s ease;
+      }
+      .map-panel {
+        transition:
+          transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.4s ease;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface font-body text-on-surface selection:bg-primary-container/30 overflow-x-hidden"
+  >
+    <nav
+      id="main-nav"
+      class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-nav rounded-full px-8 py-3.5 flex items-center justify-between w-[92%] max-w-5xl shadow-[0_8px_32px_rgba(0,101,145,0.08)] transition-all duration-500"
+    >
+      <a
+        href="/"
+        class="text-xl font-bold tracking-tighter text-primary font-headline"
+        >Etheris Dental</a
+      >
+      <div
+        class="hidden lg:flex items-center space-x-10 font-headline font-bold text-[13px] uppercase tracking-widest"
+      >
+        <a
+          class="text-on-surface-variant hover:text-primary transition-all duration-300"
+          href="#inicio"
+          >Inicio</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary transition-all duration-300"
+          href="#servicios"
+          >Servicios</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary transition-all duration-300"
+          href="#galeria"
+          >Galería</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary transition-all duration-300"
+          href="#equipo"
+          >Especialistas</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary transition-all duration-300"
+          href="#contacto"
+          >Contacto</a
+        >
+      </div>
+      <a
+        href="#contacto"
+        class="magnetic-btn bg-primary text-white px-6 py-2.5 rounded-full text-xs font-bold hover:shadow-xl transition-all duration-300"
+        >Agendar Cita</a
+      >
+    </nav>
+    <div id="scroll-progress-root">
+      <div id="scroll-progress"></div>
+    </div>
+
+    <!-- INICIO -->
+    <section
+      class="min-h-screen flex items-center pt-24 relative overflow-hidden reveal-container"
+      id="inicio"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          class="w-full h-full object-cover opacity-15 img-parallax"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsnhOfoBJroWHvDQNuQ75QnJRyVoFMeo5V2sa7M2KJ7FDayyp7b9HpM-deN8l59K9tG3Y4aOJjIE6U1CEw6LY2bLzq00j-L-ObYZBx-4a1ehGKHpWRtmjOVeYtQq_K_DNhMt-nyUGuM5gJLfijHmlx8WpZfeLnBuw3K2QtWdDCCA1_VnIAjasDKiElfwOcDIZ76SdzbmVI8tBfUbF-s0glYRVy-wRhOznc2Zq1_gdNqs9UKswlOxPO8VlB7sYH4FZI7z3oRnHDdBY"
+          id="hero-bg"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-surface/0 via-surface/50 to-surface"
+        ></div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10"
+      >
+        <div class="reveal-item">
+          <h1
+            class="text-6xl md:text-[5rem] font-bold font-headline leading-[0.95] tracking-tighter mb-8"
+          >
+            El arte de <br /><span class="text-primary italic font-normal"
+              >sanar</span
+            >
+            tu sonrisa.
+          </h1>
+          <p
+            class="text-xl text-on-surface-variant max-w-md mb-10 leading-relaxed border-l-2 border-primary/20 pl-6"
+          >
+            Precisión quirúrgica y calidez humana en un entorno diseñado para tu
+            paz mental.
+          </p>
+          <div class="flex gap-4">
+            <button
+              onclick="window.location.href = '#servicios'"
+              class="magnetic-btn bg-primary text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-500"
+            >
+              Comenzar
+            </button>
+          </div>
+        </div>
+        <div class="relative reveal-item lg:block hidden">
+          <div class="perspective-3d">
+            <div
+              class="inner-3d aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white"
+            >
+              <img
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn1fRE3eutsxkbHkZEjjSaPyMB7woW45dVfRkmd0ut-oXgMYj4fydvt2YjTb9F2xljNq-9Z7GzuzKmZbaqcIgS6wGfGaygrqeKtf4j82WMT93SQYxRQY2pvDu8aPor30jQ5R63d5fLhL9gK73FzOUT7xc1K2Day1LGtAqNm9DW99qZSOhKeMtX5-DTrf4B2s7HApGek-AtZ2EgIxp6Qnd65Lg_4Axn8UzxUZBcMpAfF0Wstd88tpsls5oxndvw85VZCp_tv_GvpaQ"
+              />
+            </div>
+          </div>
+          <div
+            class="absolute -bottom-10 -left-10 bg-white p-8 rounded-3xl shadow-2xl max-w-[240px] reveal-item"
+          >
+            <p class="text-primary font-bold text-5xl mb-2">15k+</p>
+            <p class="text-on-surface-variant text-sm font-medium">
+              Pacientes transformados con éxito.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section
+      class="py-32 bg-surface-container-low reveal-container"
+      id="nosotros"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-20 items-center"
+      >
+        <div class="w-full md:w-1/2 grid grid-cols-2 gap-6 reveal-item">
+          <div class="space-y-6">
+            <img
+              class="h-64 w-full object-cover rounded-[2.5rem] shadow-lg hover:scale-105 transition-transform duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcU4uVmQJT26FRp__a2xcZ0Vf9tz4TQhUDRXVyEvLCqFAWBOJtsmbMME9Ks7PO5tw_zLK9qeQlx5sIICWA2G3BNqjHtOYoiphD876XU5AjH_M3HWnHe0Z-I3pVo2z3d-cTYKu-xoLXJ4FtdjsTVbjtbMS-P_8hD4-1HhOX6b3qAppSrk1TeX6AC0KIkZffuzJNULJkpJ--nsed5JCDglE-AdTF2bnQrFb93MnugufQOJ0XIVAaLFp0cWK6u58FPdWwGEc8JrIe5CA"
+            />
+            <img
+              class="h-48 w-full object-cover rounded-[2.5rem] shadow-lg hover:scale-105 transition-transform duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOqRbMmCnQBAFKHnljPyLcdrtJNbySJBFSbgPzOl7ViKeXf1M5SfDWF0H5TEKrKgRM5jJP107RpVGMpefLxOWvIZdXX252wsFgF9vSE241JPLkON450Kd16uYVNhklMxy8wXyF3wgzpW-5m_uwSbxeZSglNyuE-e_IOI0mQ_-VYrMZG21tdG8DB5R6Cf1dVqlDrf8j9gSgD796rVzdmJ0hxgkCaWEuZRtOebo6p_7pfSwXHfOLgzfjd4iASsfGtvK4_t2g4bRJ1mc"
+            />
+          </div>
+          <div class="space-y-6 pt-16">
+            <img
+              class="h-48 w-full object-cover rounded-[2.5rem] shadow-lg hover:scale-105 transition-transform duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAccWw3pTrxlKhOYWRBtmigIyMvoCQB1YucVP_YrRFKKjcLcdTBW2zOryf1ISaCTDwgX1n4heyLCG7C6_fIsFa0Ilj6LFrPur-WB2aaDZ1ZcOOOtvweGumqFq19eGwGGoqPJe8aDN_YaF1mrHu6fwj7AiICIg0Tptfan1WWT-gQ1e1VZwZzDYJT-CXIAJAFReK-R6t1U48qrkC-qAbsPuntW8P8dhdjG_V1Kr0qDAgOxxsVOoIUUhjaiJaYsDidoLWskhqMLyfAz0"
+            />
+            <img
+              class="h-64 w-full object-cover rounded-[2.5rem] shadow-lg hover:scale-105 transition-transform duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCloCbC0t_3B7dTpzHiFj3-_VQvLGfXO5OcVqs0oaf2LRP8JQbBaKQHMmUaeRWTywsumbsj2UrqhY4y6G-Fz_4IB3sCz8GwRjtNHCfs_NWNiyoIU8BvYejK4frIaWyi8klu72Lr_pxeN6FRAwET1AHZsCgqBPsWfir65zWUFB-3I0ReXoJXZfrAFkAeBX1QCEbdg4CjR0MBkmK4D5yM0mybtlwf1okItqFn7QBUpcA-GSjNt_gOchEacwB_pqlSYY0LqsUZPv5I2_0"
+            />
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 space-y-8">
+          <div
+            class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest"
+          >
+            Nuestra Filosofía
+          </div>
+          <h2 class="text-4xl font-bold font-headline leading-tight">
+            El Santuario Dental que redefine el cuidado.
+          </h2>
+          <p class="text-lg text-on-surface-variant leading-relaxed">
+            Nacimos para romper el estigma del miedo al dentista. Combinamos
+            tecnología de vanguardia con un diseño de espacios que invita a la
+            relajación, asegurando que cada visita sea un momento de
+            autocuidado.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div class="flex items-start gap-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm"
+              >
+                <span class="material-symbols-outlined">verified_user</span>
+              </div>
+              <div>
+                <h4 class="font-bold mb-1">Confianza</h4>
+                <p class="text-sm text-on-surface-variant">
+                  Transparencia total en cada diagnóstico y tratamiento.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm"
+              >
+                <span class="material-symbols-outlined"
+                  >precision_manufacturing</span
+                >
+              </div>
+              <div>
+                <h4 class="font-bold mb-1">Tecnología</h4>
+                <p class="text-sm text-on-surface-variant">
+                  Equipos de última generación para mínima invasión.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="py-32 bg-surface reveal" id="servicios">
+      <div class="max-w-7xl mx-auto px-6 text-center mb-20">
+        <h2 class="text-4xl font-bold font-headline mb-4">
+          Servicios Especializados
+        </h2>
+        <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+      >
+        <div class="perspective-card group reveal-item">
+          <div
+            class="inner-card bg-surface-container-lowest p-8 rounded-2xl h-full shadow-sm hover:shadow-2xl transition-all"
+          >
+            <div
+              class="service-icon w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 transition-colors"
+            >
+              <span class="material-symbols-outlined text-3xl">dentistry</span>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Ortodoncia</h3>
+            <p class="text-on-surface-variant mb-6 text-sm">
+              Alineación perfecta con brackets invisibles y sistemas de última
+              generación.
+            </p>
+            <a
+              class="text-primary font-bold text-sm inline-flex items-center gap-2 hover:gap-4 transition-all"
+              href="#"
+            >
+              Saber más
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <div class="perspective-card group reveal-item">
+          <div
+            class="inner-card bg-surface-container-lowest p-8 rounded-2xl h-full shadow-sm hover:shadow-2xl transition-all"
+          >
+            <div
+              class="service-icon w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 transition-colors"
+            >
+              <span class="material-symbols-outlined text-3xl"
+                >auto_fix_high</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-4">Blanqueamiento</h3>
+            <p class="text-on-surface-variant mb-6 text-sm">
+              Devolvemos la luminosidad a tu sonrisa en una sola sesión
+              indolora.
+            </p>
+            <a
+              class="text-primary font-bold text-sm inline-flex items-center gap-2 hover:gap-4 transition-all"
+              href="#"
+            >
+              Saber más
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <div class="perspective-card group reveal-item">
+          <div
+            class="inner-card bg-surface-container-lowest p-8 rounded-2xl h-full shadow-sm hover:shadow-2xl transition-all"
+          >
+            <div
+              class="service-icon w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 transition-colors"
+            >
+              <span class="material-symbols-outlined text-3xl"
+                >medical_services</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-4">Implantes</h3>
+            <p class="text-on-surface-variant mb-6 text-sm">
+              Restauramos la funcionalidad y estética con materiales
+              biocompatibles.
+            </p>
+            <a
+              class="text-primary font-bold text-sm inline-flex items-center gap-2 hover:gap-4 transition-all"
+              href="#"
+            >
+              Saber más
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <div class="perspective-card group reveal-item">
+          <div
+            class="inner-card bg-surface-container-lowest p-8 rounded-2xl h-full shadow-sm hover:shadow-2xl transition-all"
+          >
+            <div
+              class="service-icon w-16 h-16 rounded-2xl flex items-center justify-center text-primary mb-6 transition-colors"
+            >
+              <span class="material-symbols-outlined text-3xl"
+                >cleaning_services</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-4">Limpieza Profunda</h3>
+            <p class="text-on-surface-variant mb-6 text-sm">
+              Mantenimiento preventivo con ultrasonido para una salud gingival
+              óptima.
+            </p>
+            <a
+              class="text-primary font-bold text-sm inline-flex items-center gap-2 hover:gap-4 transition-all"
+              href="#"
+            >
+              Saber más
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="py-32 bg-surface-container-low reveal" id="testimonios">
+      <div class="max-w-7xl mx-auto px-6 text-center mb-20">
+        <h2 class="text-4xl font-bold font-headline mb-4 text-center">
+          Historias de transformación
+        </h2>
+        <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-6 relative reveal-item">
+        <div class="testimonial-slider hide-scrollbar">
+
+        <div
+          class="testimonial-slide testimonial-card bg-surface-container-lowest p-10 rounded-2xl shadow-sm border border-outline-variant/10"
+        >
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full overflow-hidden">
+              <img
+                class="w-full h-full object-cover"
+                data-alt="portrait of a satisfied female patient with a confident bright smile"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHHCGFRtJAliABiAqFHfReJDHOPyFtaGhfttOTctJ0T226F1Vsc6-g-SmvlAOcK1q7DU4vYpUIjijZCnyHBVvNciVC0Tq-f6RelPhx9VtDJGOFd7UwvxAZ5NIEth_VPRQTME40St2RuatNtWPbHT8wLj_TVD2lclbKqkNkfN4jGLwVe4dvxSz1U07f2ElGgiEj2YBPscsseYeWW3rpG-jS6fJ3cegF0InHZ2yIdUmu-OA4DvFrVtiC8iaQQ-LcVll0_Hna9w3nlLI"
+              />
+            </div>
+            <div>
+              <p class="font-bold text-sm">Elena Rodríguez</p>
+              <p class="text-xs text-on-surface-variant">
+                Paciente de Ortodoncia
+              </p>
+            </div>
+          </div>
+          <p class="text-on-surface-variant italic leading-relaxed">
+            "La atención al detalle en Etheris es de otro mundo. Nunca pensé que
+            ir al dentista podría ser tan relajante y los resultados de mi
+            tratamiento Invisalign son perfectos."
+          </p>
+        </div>
+        <div
+          class="testimonial-slide testimonial-card bg-surface-container-lowest p-10 rounded-2xl shadow-sm border border-outline-variant/10"
+        >
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full overflow-hidden">
+              <img
+                class="w-full h-full object-cover"
+                data-alt="portrait of a happy male patient showing healthy white teeth"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6dGpJjcxi1PFYEA3IXVOErq1iersHl75UMeJ13sYsDHHToseWCnhXddLr9mRhMhncwnrtLaBoH6WEMhI6jEozcGBr_6wYWn3eT7DrLaRXdyisZEVLEiOAUcPP7GEVMF-o0ujV1bthQUcZEMYIyiBiOwCnLNZy5NVzg0Gvw0OcGmDerU7IyK1wFSI1Il93yjluSil0ue7JQx4Dr6OhB9Ed0PhzT2rH_L0eLbboc_1yLGdqE4EV2g5XMnFaB_kWH3zWI0J7S7xdVzk"
+              />
+            </div>
+            <div>
+              <p class="font-bold text-sm">Marcos Silva</p>
+              <p class="text-xs text-on-surface-variant">
+                Paciente de Implantes
+              </p>
+            </div>
+          </div>
+          <p class="text-on-surface-variant italic leading-relaxed">
+            "Recuperé la confianza para comer y sonreír. El equipo médico me
+            explicó cada paso con una paciencia increíble. 100% recomendados."
+          </p>
+        </div>
+        <div
+          class="testimonial-slide testimonial-card bg-surface-container-lowest p-10 rounded-2xl shadow-sm border border-outline-variant/10"
+        >
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full overflow-hidden">
+              <img
+                class="w-full h-full object-cover"
+                data-alt="portrait of a professional woman with a radiant smile"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbM9kxMPXw6kWgFAqWYRmHI8BfhNUlk9I6ZjtVsLiY4748OM3ZbEAgouRXn72vu_Xe0UCUyPDLKKXpcdgKDE08ggidBQ7fALSK8zjGbCAjx07UC5IUziLLjNSEKee-KYjYVNIixl2lwlAJvtrlCWs3W1ebK59cglujGrRhNbxE07PxZJm32VnpOJAUG3J2JwielYjbN_tnl5fAuCDCCDiE7zZeeYTsgKbbNZiGcKz9xutp64f1suVQQMptvIiqnmJFJaxNTs7uCUY"
+              />
+            </div>
+            <div>
+              <p class="font-bold text-sm">Lucía Méndez</p>
+              <p class="text-xs text-on-surface-variant">Diseño de Sonrisa</p>
+            </div>
+          </div>
+          <p class="text-on-surface-variant italic leading-relaxed">
+            "El blanqueamiento láser superó mis expectativas. Mis dientes se ven
+            naturales y brillantes. El diseño de la clínica te hace olvidar que
+            estás en un hospital."
+          </p>
+        </div>
+      </div>
+      <div class="testimonial-nav px-2">
+        <button class="testimonial-btn testimonial-prev" aria-label="Anterior">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button class="testimonial-btn testimonial-next" aria-label="Siguiente">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="py-32 bg-surface reveal" id="galeria">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex justify-between items-end mb-12">
+          <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold font-headline mb-4 text-center">
+              Galería de Resultados
+            </h2>
+            <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="group relative overflow-hidden rounded-3xl aspect-square">
+            <img
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              data-alt="high detail macro shot of perfect white teeth after professional dental whitening treatment"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Dnjqd6phTji2DS-xwXrpA6dzthxxTPpK5OVWksxSNcDdtOh5I-3ZMDJsSvJhWf4PBVAgFs-RuooG60drGIOzu5H4jcVgwjDb7lj_841yRWr-EIShnlJYXkE28-zZA9f-Pc18IukF7V9oBDaOs45dfVzTyfztL-XDue6S_91r4WeiuMNftcdBfFNYT4UWQAZKkUX08bxDQzhdCI5_VEh8JkWU-t7mL6J-nfp2CZ1xMlkH5aDIOEzgCBZxOS9Q_I1CZ50dIEX_tmc"
+            />
+            <div
+              class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+            ></div>
+            <div
+              class="absolute bottom-6 left-6 text-white font-bold opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0"
+            >
+              Blanqueamiento Clínico
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-3xl aspect-square">
+            <img
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              data-alt="close-up of a person smiling showing clean dental alignment after orthodontic procedure"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLLmCTypDccOGRKDhK1MGykn-sM0G54nUxtaqLJxeve5OpBtlZBuJy49H23d4Mnm3I13X0XA82S2gOrkifixIoryoKSF8u5QQjzFHLgMAA0jmSHsK8CXmyvm_jRtuNS2YPHPuv8OdivVAbAESAMcf_UNQtLvQtlg3GRVXMlKHXRyZLsvAE7xk_YcCpiMQqSx5LaSAdlRohYxtGkFWxx45SNCAxyxLtW_PqJUSK8JI4ny5d_gdX5CP5XNy5eO1KZTwRcVgx4ZkFP6A"
+            />
+            <div
+              class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+            ></div>
+            <div
+              class="absolute bottom-6 left-6 text-white font-bold opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0"
+            >
+              Ortodoncia Estética
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-3xl aspect-square">
+            <img
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              data-alt="close up of dental prosthetic implant looking perfectly natural in patient mouth"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu-2fuaFe6MFcRy3dC72BbvPmirwB6sTmE1C9WfrUH5PFEyXsCimDP3PdRIblR44F96MUOPgE31GeIdRQyz8encMF0tw2UBvV4RMrLYBfrlwt_RpfdRZXiOX4IE0JlTBbtHyBQgYb7GF9x6jREX5H0aGifp8zgMDYA-4TtdvDjtz7lPpEFRZK_M6qOZ5OKwKadI5DmuwXHEEVj0jH2-etFiQHeXL1tBpyOhUrWXg2ksVfL_MUd0bgAgrhtxI9USlBLKGxJzUfwJsg"
+            />
+            <div
+              class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+            ></div>
+            <div
+              class="absolute bottom-6 left-6 text-white font-bold opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0"
+            >
+              Implantología Digital
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section
+      class="py-32 bg-surface-container-low reveal-container"
+      id="equipo"
+    >
+      <div class="max-w-7xl mx-auto px-6 text-center mb-20 reveal-item">
+        <h2 class="text-4xl font-bold font-headline mb-8">
+          Nuestros Especialistas
+        </h2>
+        <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16"
+      >
+        <div class="group reveal-item">
+          <div class="perspective-3d mb-8">
+            <div
+              class="inner-3d relative w-72 h-72 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl"
+            >
+              <img
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4PbvultqyHliw5VUlmXTFttK3svlXt4WC6bJsZZssV2BbkkO63voklfjMJavS5pR0cVhCHCrQSgu83URCoEhAIX1UbCPbyrh0BCd4Se3U1CPHzTD1mSqJP8mGG6fjncSmqfNxZfGHxfqFzsiRC-stXGUQOLxv9m-iJmb2WZErmVM0JbziStaf8wWFfZysagLRboaObexVgVWFme7OyPYObzFuF-kqFTJU4YYaZP9whdKYAvNF6QjhmpFgU3gyg6sEuEB3l225BTY"
+              />
+            </div>
+          </div>
+          <h4 class="text-2xl font-bold">Dr. Alejandro Torres</h4>
+          <p
+            class="text-primary font-bold uppercase tracking-widest text-xs mt-2"
+          >
+            Director Médico
+          </p>
+        </div>
+        <div class="group reveal-item">
+          <div class="perspective-3d mb-8">
+            <div
+              class="inner-3d relative w-72 h-72 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl"
+            >
+              <img
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp92fhfEht-giurulWV7H4NI4m_qM6PIomaKFuq4k3_U6tF2PsDOt27h7CwOeY2v9koVStflSlML_umBcex1x0RshKHs7AQD5pUiv-xBYONm22X5FuCURbgbcfJxfO6rEi4HKBMNNKM81PvhUXNHhL8r9q0FCJyGuzBE4LgHdc3Nr4glvY1d7ghSJkcyUdn4nE0E6qFkfLmFfoVQA0ljDDS5TYuOOOsgpZQ1QObiVZtquOopuqeYz3FjhViyWI00SsM2pONVXeaTk"
+              />
+            </div>
+          </div>
+          <h4 class="text-2xl font-bold">Dra. Sofía Valente</h4>
+          <p
+            class="text-primary font-bold uppercase tracking-widest text-xs mt-2"
+          >
+            Estética Dental
+          </p>
+        </div>
+        <div class="group reveal-item">
+          <div class="perspective-3d mb-8">
+            <div
+              class="inner-3d relative w-72 h-72 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl"
+            >
+              <img
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs7YVwb_5pDgOK3PnjsaiCIWcN4FDuvUEdOvN57x1mXH-YLDjtymgI_Mx5vRsUjRznCacSF_5kcK8hgdaUyGjl8uBesPJzRFt9z4JMo_4k6xLYN7kgaYLsGgnfzD9HnkW3jBtFTMqlo9FyLhAF8qLz6lbEE2pWgDvxAaRBT6BIFdxAMfuZv6LYvnNmlEGRw0U8pQhOUfXoLoFaBDGx2KbKfa93pZygRGSJ3w2-jaS-OSUSUg3QyvsA54yNQ0UA87cOwb0EvDsfygw"
+              />
+            </div>
+          </div>
+          <h4 class="text-2xl font-bold">Dr. Javier Ruiz</h4>
+          <p
+            class="text-primary font-bold uppercase tracking-widest text-xs mt-2"
+          >
+            Ortodoncia
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="py-32 bg-surface reveal" id="contacto">
+      <div class="max-w-7xl mx-auto px-6">
+        <div
+          class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0_4px_40px_rgba(0,101,145,0.04)] grid grid-cols-1 lg:grid-cols-2 contact-panel reveal-item"
+        >
+          <div class="p-12 lg:p-20 space-y-8">
+            <h2 class="text-4xl font-bold font-headline">
+              Hablemos de tu salud dental
+            </h2>
+            <p class="text-on-surface-variant">
+              Completa el formulario y nuestro equipo se pondrá en contacto
+              contigo en menos de 24 horas.
+            </p>
+            <form class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                    >Nombre Completo</label
+                  >
+                  <input
+                    id="ipt-name"
+                    class="field-focus w-full bg-surface-container-low border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary transition-all"
+                    placeholder="Ej. Juan Pérez"
+                    type="text"
+                  />
+                  <p id="chk-name" class="field-status">
+                    Nombre listo para enviar
+                  </p>
+                </div>
+                <div class="space-y-2">
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                    >Teléfono</label
+                  >
+                  <input
+                    id="ipt-tel"
+                    class="field-focus w-full bg-surface-container-low border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary transition-all"
+                    placeholder="+34 000 000 000"
+                    type="tel"
+                  />
+                  <p id="chk-tel" class="field-status">Teléfono listo</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                  >Email</label
+                >
+                <input
+                  class="w-full bg-surface-container-low border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary transition-all"
+                  placeholder="hola@ejemplo.com"
+                  type="email"
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                  >Mensaje</label
+                >
+                <textarea
+                  class="w-full bg-surface-container-low border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary transition-all"
+                  placeholder="¿En qué podemos ayudarte?"
+                  rows="4"
+                ></textarea>
+              </div>
+              <button
+                class="cta-button w-full py-4 rounded-md font-bold text-lg transition-all flex items-center justify-center gap-2"
+              >
+                Enviar Solicitud
+                <span class="material-symbols-outlined">send</span>
+              </button>
+            </form>
+          </div>
+          <div class="relative hidden lg:block h-full">
+            <img
+              class="absolute inset-0 w-full h-full object-cover"
+              data-alt="professional modern medical reception area with clean aesthetic and warm ambient lighting"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0FmvSJ1aTiO9LL0rpg1iY2ezOnNIkN9SKl4pd_jxP3SRrXABph1lxsdQIhiyJrm-4AP81PyYGAyuEN0OjZ6xP81Sk9oaUgvhfSJ5Zv0wO55tok_qfzVvpzOaLzO2jICsh2waNWoxIoDYn4Qf7WIsTuyZAcz_anxUD_aFqfmvnlD6hWaaPlEy7y7ywwGtzhPri7Suw7vm5OjaVwc9lWVkSlirozTilvIcjS0Cipk1WFczWtrzrTbyALr5_1b_5_9Nhht8qSCKmA6Q"
+            />
+            <div class="absolute inset-0 bg-primary/10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UBICACIÓN -->
+    <section class="py-32 bg-surface-container-low reveal" id="ubicacion">
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 items-center"
+      >
+        <div class="lg:col-span-1 space-y-6">
+          <h2 class="text-3xl font-bold font-headline">Visítanos</h2>
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <span class="material-symbols-outlined text-primary"
+                >location_on</span
+              >
+              <div>
+                <p class="font-bold">Dirección</p>
+                <p class="text-on-surface-variant">
+                  Av. de la Innovación 45, Edificio Zenit<br />28001, Madrid,
+                  España
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="material-symbols-outlined text-primary"
+                >schedule</span
+              >
+              <div>
+                <p class="font-bold">Horarios</p>
+                <p class="text-on-surface-variant">
+                  Lun - Vie: 9:00 - 20:00<br />Sáb: 10:00 - 14:00
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="material-symbols-outlined text-primary">call</span>
+              <div>
+                <p class="font-bold">Emergencias</p>
+                <p class="text-primary font-bold">+34 912 345 678</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="lg:col-span-2 h-[400px] rounded-3xl overflow-hidden shadow-xl map-panel reveal-item relative"
+        >
+          <iframe
+            class="w-full h-full border-0"
+            src="https://maps.google.com/maps?q=Av.%20de%20la%20Innovaci%C3%B3n%2045%2C%20Madrid%2C%20Espa%C3%B1a&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <div
+            class="absolute bottom-6 left-6 rounded-3xl bg-white/90 backdrop-blur-md p-4 shadow-xl border border-slate-200"
+          >
+            <p class="text-sm text-on-surface-variant">Ubicación actual</p>
+            <p class="font-bold">Clínica Etheris Dental</p>
+            <a
+              class="text-primary text-sm font-bold inline-flex items-center gap-1 hover:underline"
+              href="https://www.google.com/maps/search/?api=1&query=Av.+de+la+Innovaci%C3%B3n+45+Madrid"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Ver en Google Maps
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-50 dark:bg-slate-950 w-full py-16 reveal">
+      <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="space-y-5">
+          <span class="text-2xl font-bold text-cyan-700 font-headline"
+            >Etheris Dental</span
+          >
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Cuidamos tu sonrisa con tecnología moderna y atención cálida,
+            pensada para el paciente colombiano.
+          </p>
+          <div class="flex items-center gap-3">
+            <a
+               class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-600 transition"
+              href="#"
+              aria-label="WhatsApp"
+            >
+              <i class="fa-brands fa-whatsapp text-xl"></i>
+            </a>
+            <a
+             class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-600 transition"
+              href="#"
+              aria-label="Instagram"
+            >
+              <i class="fa-brands fa-instagram text-xl"></i>
+            </a>
+            <a
+               class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-600 transition"
+              href="#"
+              aria-label="Facebook"
+            >
+              <i class="fa-brands fa-facebook-f text-xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          <h4 class="font-bold text-white">Servicios</h4>
+          <ul class="space-y-3 text-sm text-slate-700">
+            <li>
+              <a class="hover:text-cyan-700 transition" href="#servicios"
+                >Ortodoncia</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-cyan-700 transition" href="#servicios"
+                >Blanqueamiento</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-cyan-700 transition" href="#servicios"
+                >Implantes</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-cyan-700 transition" href="#servicios"
+                >Limpieza Profunda</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-5">
+          <h4 class="font-bold text-white">Contacto</h4>
+          <div class="text-sm text-slate-700 space-y-3">
+            <div>
+              <p class="font-bold text-slate-700">Teléfono</p>
+              <p>+57 312 345 6789</p>
+            </div>
+            <div>
+              <p class="font-bold text-slate-700">Dirección</p>
+              <p>Cra 15 #123-45, Bogotá</p>
+            </div>
+            <div>
+              <p class="font-bold text-slate-700">Horario</p>
+              <p>Lun - Vie: 8:00 - 19:00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto px-8 mt-12 pt-8 border-t border-cyan-800/30 flex flex-col md:flex-row justify-between gap-4 text-slate-700 text-xs"
+      >
+        <p>© 2026 Etheris Dental. Todos los derechos reservados.</p>
+        <div class="flex flex-wrap gap-4">
+          <span>Atención personalizada</span>
+          <span>Espacios seguros</span>
+          <span>Pagos protegidos</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // 1. Efecto de Navegación Dinámica y barra de progreso
+      const progressBar = document.getElementById("scroll-progress");
+      const heroBg = document.getElementById("hero-bg");
+      const header = document.getElementById("main-nav");
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        if (scrollY > 100) {
+          header.classList.add("top-4", "scale-[0.98]", "shadow-2xl");
+          header.classList.remove("top-6");
+        } else {
+          header.classList.remove("top-4", "scale-[0.98]", "shadow-2xl");
+          header.classList.add("top-6");
+        }
+
+        const documentHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress = documentHeight
+          ? Math.min(100, (scrollY / documentHeight) * 100)
+          : 0;
+        progressBar.style.width = `${progress}%`;
+
+        if (heroBg) {
+          heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+        }
+      };
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+
+      // 2. 3D Tilt dinámico para tarjetas y fotos
+      document.querySelectorAll(".perspective-3d").forEach((el) => {
+        const inner = el.querySelector(".inner-3d");
+        el.addEventListener("mousemove", (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          inner.style.transform = `rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale(1.03)`;
+        });
+        el.addEventListener("mouseleave", () => {
+          inner.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+        });
+      });
+
+      // 3. Scroll Reveal con Intersection Observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document
+        .querySelectorAll(".reveal, .reveal-container")
+        .forEach((el) => observer.observe(el));
+
+      // 4. Botón Magnético
+      document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`;
+        });
+        btn.addEventListener(
+          "mouseleave",
+          () => (btn.style.transform = `translate(0,0)`),
+        );
+      });
+
+      // 5. Carrusel de testimonios
+      const testimonialSlider = document.querySelector(".testimonial-slider");
+      const testimonialPrev = document.querySelector(".testimonial-prev");
+      const testimonialNext = document.querySelector(".testimonial-next");
+
+      const updateTestimonialButtons = () => {
+        if (!testimonialSlider || !testimonialPrev || !testimonialNext) return;
+        const maxScroll = testimonialSlider.scrollWidth - testimonialSlider.clientWidth;
+        testimonialPrev.disabled = testimonialSlider.scrollLeft <= 20;
+        testimonialNext.disabled = testimonialSlider.scrollLeft >= maxScroll - 20;
+      };
+
+      const scrollTestimonial = (direction) => {
+        if (!testimonialSlider) return;
+        const cardWidth = testimonialSlider.querySelector(".testimonial-slide")?.clientWidth || 300;
+        testimonialSlider.scrollBy({
+          left: direction * (cardWidth + 20),
+          behavior: "smooth",
+        });
+      };
+
+      let testimonialAutoPlay;
+      const startTestimonialAutoplay = () => {
+        if (!testimonialSlider) return;
+        clearInterval(testimonialAutoPlay);
+        testimonialAutoPlay = setInterval(() => {
+          const maxScroll = testimonialSlider.scrollWidth - testimonialSlider.clientWidth;
+          if (testimonialSlider.scrollLeft >= maxScroll - 20) {
+            testimonialSlider.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            scrollTestimonial(1);
+          }
+        }, 4200);
+      };
+
+      const stopTestimonialAutoplay = () => {
+        clearInterval(testimonialAutoPlay);
+      };
+
+      if (testimonialPrev && testimonialNext && testimonialSlider) {
+        testimonialPrev.addEventListener("click", () => {
+          scrollTestimonial(-1);
+        });
+        testimonialNext.addEventListener("click", () => {
+          scrollTestimonial(1);
+        });
+        testimonialSlider.addEventListener("scroll", updateTestimonialButtons);
+        testimonialSlider.addEventListener("mouseenter", stopTestimonialAutoplay);
+        testimonialSlider.addEventListener("mouseleave", startTestimonialAutoplay);
+        updateTestimonialButtons();
+        startTestimonialAutoplay();
+      }
+
+      // 6. Validación de Formulario (Soft Green)
+      const setupValidation = (iptId, chkId) => {
+        const ipt = document.getElementById(iptId);
+        const chk = document.getElementById(chkId);
+        if (!ipt || !chk) return;
+        ipt.addEventListener("input", () => {
+          if (ipt.value.length > 3) {
+            chk.style.opacity = "1";
+            ipt.style.borderColor = "#006c49";
+          } else {
+            chk.style.opacity = "0";
+            ipt.style.borderColor = "";
+          }
+        });
+      };
+      setupValidation("ipt-name", "chk-name");
+      setupValidation("ipt-tel", "chk-tel");
+    </script>
+  </body>
+</html>
